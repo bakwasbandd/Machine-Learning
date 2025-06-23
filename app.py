@@ -11,8 +11,8 @@ sp = Spotify(auth_manager=SpotifyOAuth(
     scope="playlist-read-private user-top-read"
 ))
 
-st.title("🐱 Noodles Hates It - Spotify Playlist Analyzer")
-
+st.title("₍^. .^₎⟆ Noodles Hates It")
+st.subheader("Does Noodles Think Your Playlist is Trash? Yes he does ...😼")
 playlist_url = st.text_input("Paste your Spotify Playlist Link:")
 
 if playlist_url:
