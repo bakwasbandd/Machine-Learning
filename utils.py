@@ -1,34 +1,30 @@
 import random
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import cohere  # for AI generated roasts
 
-# sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-#     client_id="0c5335a96ef648f2870da0546328347a",
-#     client_secret="10f86e0d76634e69a8e5ef8a127fc41e",
-#     redirect_uri="http://127.0.0.1:8080",
-#     scope="user-top-read"
-# ))
+co = cohere.Client("zOuAgdyAsRK5DWmQHpJzeFzGqA0KP5kIZDZLBtGN")
 
 
 def get_roast(name):
-    return random.choice([
-        f"Noodles thinks you've got an unhealthy obsession with {name}. Seek help.",
-        f"{name}? Again? Noodles just walked out of the room.",
-        f"Even Noodles knows other artists exist besides {name}."
-    ])
 
+    response = co.chat(
+        model='command-r',
+        message=f"Write one sharp, 2-3 lines max roast from Noodles (no cheesy references, and ALWAYS include Noodle's name in the roast) directed at the USER for their top artist/genre, {name}, who dominates their playlist with the most songs. Keep it clever and no cringe, bonus points if you tailor it specifically to that artist/genre. Do not include any follow-up commentary or ANY text after the roast"
+
+    )
+    return (response.text.strip())
+    # f"Noodles thinks you've got an unhealthy obsession with {name}. Seek help.",
+    # f"{name}? Again? Noodles just walked out of the room.",
+    # f"Even Noodles knows other artists exist besides {name}."
 
 def get_personality_roast(genres):
-    if "emo" in genres:
-        return "Noodles says you're one sad song away from a poetry blog."
-    elif "pop" in genres:
-        return "You like the musical equivalent of white bread. - Noodles"
-    elif "rap" in genres:
-        return "Tough on the outside, but Noodles knows you're soft inside."
-    elif "rock" in genres:
-        return "You probably still use wired headphones. Vintage. - Noodles"
-    else:
-        return "You're mysterious... or just confused. - Noodles"
+    response = co.chat(
+        model='command-r',
+        message=f"Write one sharp, 2-3 lines max roast from Noodles (no cheesy references, and ALWAYS include Noodle's name in the roast) directed at the USER for the PERSONALITY of their PLAYLIST, which is dominated by the {genres} genre. Keep it clever and no cringe, making sure to poke fun at the vibe or personality of the playlist based on that genre. No generic commentary, and do not include any follow-up text after the roast."
+    )
+    return response.text.strip()
+
 
 
 def fetch_artist_genres(artist_id, sp):
