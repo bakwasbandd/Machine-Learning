@@ -81,7 +81,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.subheader(" ")
+# st.subheader(" ")
 
 
 def get_video_html(path, width=200):
@@ -90,17 +90,6 @@ def get_video_html(path, width=200):
     encoded = base64.b64encode(data).decode()
     return f'''
     <video width="{width}" autoplay muted loop playsinline style="border-radius: 10px;">
-        <source src="data:video/mp4;base64,{encoded}" type="video/mp4">
-    </video>
-    '''
-
-
-def get_video_html(path, width=200):
-    with open(path, 'rb') as f:
-        data = f.read()
-    encoded = base64.b64encode(data).decode()
-    return f'''
-    <video width="{width}" height="{width}" autoplay muted loop playsinline style="border-radius: 20px;">
         <source src="data:video/mp4;base64,{encoded}" type="video/mp4">
     </video>
     '''
@@ -149,6 +138,7 @@ if playlist_url:
         else:
             st.error("Something went wrong. Please check the playlist link.")
 
+st.subheader("")  #to add space!!
 
 st.subheader("👩🏻‍💻 About this project ")
 st.markdown("""
