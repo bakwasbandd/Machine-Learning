@@ -3,6 +3,8 @@ from spotify_analysis import analyze_playlist
 from utils import get_roast, get_personality_roast, get_recommendations_raw
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
+from PIL import Image
+import streamlit as st
 
 sp = Spotify(auth_manager=SpotifyOAuth(
     client_id="0c5335a96ef648f2870da0546328347a",
@@ -11,9 +13,55 @@ sp = Spotify(auth_manager=SpotifyOAuth(
     scope="playlist-read-private user-top-read"
 ))
 
-st.title("₍^. .^₎⟆ Noodles Hates It")
-st.subheader("Does Noodles Think Your Playlist is Trash? Yes he does ...😼")
-playlist_url = st.text_input("Paste your Spotify Playlist Link:")
+
+st.markdown(
+    """
+    <style>
+    /* Main background area */
+    .stApp {
+        background-color: #252525;
+    }
+
+    /* Optional: Scrollbar for light themes */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #252525;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #C9C9C9;
+        border-radius: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+st.markdown("""
+    <h1 style='text-align: center; font-family:Comic Sans MS; color:#b35929;'>
+        ₍^. .^₎⟆<br>Noodles Hates It
+    </h1>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <h3 style='text-align: center; font-family:Comic Sans MS; color:#ffeee6;'>
+        Does Noodles Think Your Playlist is Trash?<br>Yes he does ...( -_•)╦̵̵̿╤─
+    </h3>
+""", unsafe_allow_html=True)
+
+
+img = Image.open("pictures/noodles1.png")
+
+# to keep the picture in centre 
+left, centre, right = st.columns([4, 2, 4])
+
+with centre:
+    st.image(img, width=150)
+
+playlist_url = st.text_input(
+    "Insert your playlist here so Noodles can call it trash — respectfully, of course!!! (ᵕ•_•)")
 
 if playlist_url:
     with st.spinner("Analyzing your playlist..."):
