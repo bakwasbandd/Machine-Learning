@@ -132,13 +132,42 @@ if playlist_url:
             st.write(get_personality_roast(result["top_genres"]))
 
             st.subheader("🎶 Recommended Songs You Might Like")
-            for track in result["recommendations"]:
-                st.markdown(
-                    f"- [{track['name']}]({track['url']}) by {track['artist']}")
+            # st.write("Still working on this... >_<")
+            # add a gif here!!!!!!!!!!!!!
+            st.subheader("")
+            col1, col2, col3 = st.columns([1, 2, 1])
+
+            with col2:
+                st.markdown(get_video_html("pictures/loadingcar.mp4",
+                            width=300), unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style='text-align: center;'>
+                <div style='
+                    background-color: #fff9c4;
+                    border: 2px dashed #d4af37;
+                    padding: 12px 16px;
+                    margin-top: 12px;
+                    border-radius: 10px;
+                    color: #444444;
+                    font-family: Comic Sans MS, cursive, bold;
+                    text-align: center;
+                    box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+                    display: inline-block;
+                '>
+                    🐾 Still working on this... &gt;_&lt;
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # !!! not working !!!
+            # for track in result["recommendations"]:
+            #     st.markdown(
+            #         f"- [{track['name']}]({track['url']}) by {track['artist']}")
         else:
             st.error("Something went wrong. Please check the playlist link.")
 
-st.subheader("")  #to add space!!
+st.subheader("")  # to add space!!
 
 st.subheader("👩🏻‍💻 About this project ")
 st.markdown("""
