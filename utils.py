@@ -14,9 +14,7 @@ def get_roast(name):
 
     )
     return (response.text.strip())
-    # f"Noodles thinks you've got an unhealthy obsession with {name}. Seek help.",
-    # f"{name}? Again? Noodles just walked out of the room.",
-    # f"Even Noodles knows other artists exist besides {name}."
+
 
 def get_personality_roast(genres):
     response = co.chat(
