@@ -5,6 +5,7 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from PIL import Image
 import streamlit as st
+import base64  # for videos!!
 
 sp = Spotify(auth_manager=SpotifyOAuth(
     client_id="0c5335a96ef648f2870da0546328347a",
@@ -12,6 +13,34 @@ sp = Spotify(auth_manager=SpotifyOAuth(
     redirect_uri="http://127.0.0.1:8080",
     scope="playlist-read-private user-top-read"
 ))
+
+st.markdown("""
+    <style>
+    .block-container {
+        padding-top: 0rem;  /* Reduce from default (~6.5rem) */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+st.markdown("""
+<style>
+.corner-paw {
+    position: fixed;
+    font-size: 30px;
+    z-index: 99;
+}
+.top-left { top: 5px; left: 10px; }
+.top-right { top: 5px; right: 10px; }
+.bottom-left { bottom: 5px; left: 10px; }
+.bottom-right { bottom: 5px; right: 10px; }
+</style>
+
+<div class="corner-paw top-left">🐾</div>
+<div class="corner-paw top-right">🐾</div>
+<div class="corner-paw bottom-left">🐾</div>
+<div class="corner-paw bottom-right">🐾</div>
+""", unsafe_allow_html=True)
 
 
 st.markdown(
@@ -52,16 +81,50 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+st.subheader(" ")
+
+
+def get_video_html(path, width=200):
+    with open(path, 'rb') as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
+    return f'''
+    <video width="{width}" autoplay muted loop playsinline style="border-radius: 10px;">
+        <source src="data:video/mp4;base64,{encoded}" type="video/mp4">
+    </video>
+    '''
+
+
+def get_video_html(path, width=200):
+    with open(path, 'rb') as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
+    return f'''
+    <video width="{width}" height="{width}" autoplay muted loop playsinline style="border-radius: 20px;">
+        <source src="data:video/mp4;base64,{encoded}" type="video/mp4">
+    </video>
+    '''
+
+
 img = Image.open("pictures/noodles1.png")
 
-# to keep the picture in centre 
+# to keep the picture in centre
 left, centre, right = st.columns([4, 2, 4])
 
 with centre:
     st.image(img, width=150)
 
-playlist_url = st.text_input(
-    "Insert your playlist here so Noodles can call it trash — respectfully, of course!!! (ᵕ•_•)")
+
+st.markdown("""
+<div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
+    <label style='font-size:18px; color:'white'; font-weight:bold;'>
+        Insert your playlist here so Noodles can call it trash — <br>respectfully, of course!!! (ᵕ•_•)
+    </label>
+</div>
+""", unsafe_allow_html=True)
+
+playlist_url = st.text_input("", key="playlist_input")
+
 
 if playlist_url:
     with st.spinner("Analyzing your playlist..."):
@@ -85,3 +148,49 @@ if playlist_url:
                     f"- [{track['name']}]({track['url']}) by {track['artist']}")
         else:
             st.error("Something went wrong. Please check the playlist link.")
+
+
+st.subheader("👩🏻‍💻 About this project ")
+st.markdown("""
+<div style="border: 2px dashed #ffeee6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px auto;
+            width: 80%;
+            color: #ffeee6;
+            font-family: Comic Sans MS;
+            text-align: center;">
+    hiiii!!! turning everything into a tribute to my rude orange cat, Noodles, is kind of my thing. <br><br>
+    he’s nosy, dramatic, and exceptionally gifted at shoving his face where it doesn’t belong — like straight into my food. 🍲<br><br>
+    sooo naturally, Noodle Poodle feels <b>very</b> entitled to share his completely unsolicited opinions about your playlist.<br>
+    whether you asked or not hehe
+</div>
+""", unsafe_allow_html=True)
+
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown(get_video_html("pictures/dancingcar.mp4"),
+                unsafe_allow_html=True)
+
+with col2:
+    st.markdown(get_video_html("pictures/dancingmonke.mp4"),
+                unsafe_allow_html=True)
+
+with col3:
+    st.markdown(get_video_html("pictures/dancingcar.mp4"),
+                unsafe_allow_html=True)
+
+st.text("")
+
+st.markdown("""
+<div style="text-align: center;">
+    <a href="https://github.com/bakwasbandd" target="_blank" style="text-decoration: none; margin-right: 15px;">
+        <button style="padding:10px 20px; font-size:16px; border:none; background-color:#b35929; color:white; border-radius:5px;">💻 GitHub</button>
+    </a>
+    <a href="https://www.linkedin.com/in/muntaha-adnan/" target="_blank" style="text-decoration: none;">
+        <button style="padding:10px 20px; font-size:16px; border:none; background-color:#b35929; color:white; border-radius:5px;">🔗 LinkedIn</button>
+    </a>
+</div>
+""", unsafe_allow_html=True)
