@@ -2,7 +2,7 @@
 
 > “I’ve heard better music coming from the blender.” – **Noodles**, probably.
 
-![Noodles excited to judge your playlist](pictures/git.gif)
+                ![Noodles excited to judge your playlist](pictures/git.gif)
 
 🎧 A brutally honest, visually charming(as much as i could make it), and unapologetically judgmental Spotify playlist analyzer built in Python.  
 This app lets my music-snob cat **Noodles** roast your musical taste, because what’s self-awareness without a little digital humiliation that too by an orange cat?
