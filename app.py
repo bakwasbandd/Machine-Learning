@@ -1,6 +1,6 @@
 import streamlit as st
 from spotify_analysis import analyze_playlist
-from utils import get_artist_roast, get_personality_roast, get_recommendations_raw,get_genre_roast
+from utils import get_artist_roast, get_personality_roast, get_recommendations_raw, get_genre_roast
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from PIL import Image
@@ -14,7 +14,6 @@ sp = Spotify(auth_manager=SpotifyOAuth(
     scope="playlist-read-private user-top-read"
 ))
 
-
 st.markdown("""
     <style>
     .block-container {
@@ -22,7 +21,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
 
 st.markdown("""
 <style>
@@ -42,7 +40,6 @@ st.markdown("""
 <div class="corner-paw bottom-left">🐾</div>
 <div class="corner-paw bottom-right">🐾</div>
 """, unsafe_allow_html=True)
-
 
 st.markdown(
     """
@@ -232,9 +229,7 @@ if playlist_url:
             # for recommendations
             # !!! not working !!!
             # try recommendations based off top 5 artists
-            # for track in result["recommendations"]:
-            #     st.markdown(
-            #         f"- [{track['name']}]({track['url']}) by {track['artist']}")
+
         else:
             st.error("Something went wrong. Please check the playlist link.")
 
@@ -243,8 +238,6 @@ col1, col2, col3 = st.columns(3)
 with col2:
     st.markdown(get_video_html("pictures/jumpingcar.mp4"),
                 unsafe_allow_html=True)
-
-st.subheader("")  # to add space!!
 
 st.subheader("👩🏻‍💻 About this project ")
 st.markdown("""

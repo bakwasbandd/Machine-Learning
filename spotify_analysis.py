@@ -8,18 +8,19 @@ from utils import fetch_artist_genres, get_recommendations_raw
 
 def get_playlist_tracks(playlist_url, sp):
     playlist_id = playlist_url.split("/")[-1].split("?")[0]
-    playlist= sp.playlist(playlist_id)
-    tracks = sp.playlist_tracks(playlist_id)
+    playlist= sp.playlist(playlist_id) # for playlist metadata
+    tracks = sp.playlist_tracks(playlist_id) #track info
     playlist_name = playlist['name'] #to get playlist name
     data = []
 
+    # to store info for EACH track in the playlist
     for item in tracks['items']:
         track = item['track']
         if track:
             data.append({
                 'name': track['name'],
                 'artist': track['artists'][0]['name'],
-                'artist_id': track['artists'][0]['id']
+                'artist_id': track['artists'][0]['id'] 
             })
     return pd.DataFrame(data),playlist_name
 
@@ -68,11 +69,11 @@ def plot_bar_chart(data, title, ylabel):
 
 
 def analyze_playlist(playlist_url, sp):
-    df,playlist_name = get_playlist_tracks(playlist_url, sp)
+    df,playlist_name = get_playlist_tracks(playlist_url, sp) #returns the data frame + pl name
     if df.empty:
         return None
 
-    artist_counts = df['artist'].value_counts()
+    artist_counts = df['artist'].value_counts() #count how many times each artist appears
     top_artist = artist_counts.idxmax()
 
     genre_list = []

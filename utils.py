@@ -44,7 +44,7 @@ def fetch_artist_genres(artist_id, sp):
     except:
         return []
 
-
+#not wokring
 def get_recommendations_raw(seed_genres, sp):
     try:
         valid_genres = sp.recommendation_genre_seeds()['genres']
