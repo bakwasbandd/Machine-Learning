@@ -1,6 +1,6 @@
 import streamlit as st
 from spotify_analysis import analyze_playlist
-from utils import get_roast, get_personality_roast, get_recommendations_raw
+from utils import get_artist_roast, get_personality_roast, get_recommendations_raw,get_genre_roast
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from PIL import Image
@@ -14,10 +14,11 @@ sp = Spotify(auth_manager=SpotifyOAuth(
     scope="playlist-read-private user-top-read"
 ))
 
+
 st.markdown("""
     <style>
     .block-container {
-        padding-top: 0rem;  /* Reduce from default (~6.5rem) */
+        padding-top: 0rem;   
     }
     </style>
 """, unsafe_allow_html=True)
@@ -48,7 +49,7 @@ st.markdown(
     <style>
     /* Main background area */
     .stApp {
-        background-color: #252525;
+        background-color: #000000;
     }
 
     /* Optional: Scrollbar for light themes */
@@ -113,6 +114,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 playlist_url = st.text_input("", key="playlist_input")
+st.subheader("")
 
 
 if playlist_url:
@@ -120,19 +122,83 @@ if playlist_url:
         result = analyze_playlist(playlist_url, sp)
 
         if result:
-            st.subheader("🎤 Artist Frequency")
+            st.text("")
+            st.title(f"🎵 Playlist: {result['playlist_name']}")
+            st.subheader("🎤 Noodles thinks you're a bit obsessed ")
             st.pyplot(result["artist_chart"])
-            st.write(get_roast(result["top_artist"]))
+            # st.write(get_roast(result["top_artist"]))
+            st.markdown(f"""
+            <div style='
+                background-color: #353839;
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px auto;
+                width: 80%;
+                text-align: center;
+                font-size: 18px;
+                font-family: Comic Sans MS, cursive;
+                color: #FFFFFF;
+                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            '>
+                {get_artist_roast(result["top_artist"])}
+            </div>
+            """, unsafe_allow_html=True)
+            img = Image.open("pictures/noodlesSleeping(2).jpg")
+            left, centre, right = st.columns([4, 2, 4])
+            with centre:
+                st.image(img, width=200,
+                         caption='The state i found noodles in after he listened to your playlist.')
 
-            st.subheader("🎧 Genre Distribution")
+            st.subheader(
+                "🎧 Noodles thinks you should pick a personality, ANY personality")
             st.pyplot(result["genre_chart"])
-            st.write(get_roast(result["top_genre"]))
 
-            st.subheader("🧠 Playlist Personality (According to Noodles)")
-            st.write(get_personality_roast(result["top_genres"]))
+            st.markdown(f"""
+            <div style='
+                background-color: #353839;
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px auto;
+                width: 80%;
+                text-align: center;
+                font-size: 18px;
+                font-family: Comic Sans MS, cursive;
+                color: #FFFFFF;
+                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            '>
+                {get_genre_roast(result["top_genre"])}
+            </div>
+            """, unsafe_allow_html=True)
 
-            st.subheader("🎶 Recommended Songs You Might Like")
-            # st.write("Still working on this... >_<")
+            col1, col2, col3 = st.columns(3)
+            with col2:
+                st.markdown(get_video_html("pictures/litrnoodles.mp4"),
+                            unsafe_allow_html=True)
+
+            st.subheader("🧠 Noodles rates your playlist a SOLID 2/10")
+            # st.write(get_personality_roast(result["top_genres"]))
+            st.markdown(f"""
+            <div style='
+                background-color: #353839;
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px auto;
+                width: 80%;
+                text-align: center;
+                font-size: 18px;
+                font-family: Comic Sans MS, cursive;
+                color: #FFFFFF;
+                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            '>
+                {get_personality_roast(result["top_genres"])}
+                </div>
+            """, unsafe_allow_html=True)
+            col1, col2, col3 = st.columns(3)
+            with col2:
+                st.markdown(get_video_html("pictures/carjudging.mp4"),
+                            unsafe_allow_html=True)
+
+            st.subheader("🎶 More Trash (Curated by Noodles)")
             # add a gif here!!!!!!!!!!!!!
             st.subheader("")
             col1, col2, col3 = st.columns([1, 2, 1])
@@ -155,17 +221,28 @@ if playlist_url:
                     box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
                     display: inline-block;
                 '>
-                    🐾 Still working on this... &gt;_&lt;
+                    🐾 Still working on this... 🐾 
                 </div>
             </div>
             """, unsafe_allow_html=True)
-
+            st.subheader("")
+            st.markdown(
+                "<div style='text-align:center; font-size:20px;'>ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ</div>", unsafe_allow_html=True)
+            st.subheader("")
+            # for recommendations
             # !!! not working !!!
+            # try recommendations based off top 5 artists
             # for track in result["recommendations"]:
             #     st.markdown(
             #         f"- [{track['name']}]({track['url']}) by {track['artist']}")
         else:
             st.error("Something went wrong. Please check the playlist link.")
+
+
+col1, col2, col3 = st.columns(3)
+with col2:
+    st.markdown(get_video_html("pictures/jumpingcar.mp4"),
+                unsafe_allow_html=True)
 
 st.subheader("")  # to add space!!
 
@@ -179,10 +256,10 @@ st.markdown("""
             color: #ffeee6;
             font-family: Comic Sans MS;
             text-align: center;">
-    hiiii!!! turning everything into a tribute to my rude orange cat, Noodles, is kind of my thing. <br><br>
-    he’s nosy, dramatic, and exceptionally gifted at shoving his face where it doesn’t belong — like straight into my food. 🍲<br><br>
-    sooo naturally, Noodle Poodle feels <b>very</b> entitled to share his completely unsolicited opinions about your playlist.<br>
-    whether you asked or not hehe
+            hiiiii!!<br> turning literally everything about my rude orange cat, Noodles, is kind of my brand.
+            he’s nosy, dramatic, and wildly talented at sticking his face where it absolutely doesn’t belong — like right into my food 🍜😾 <br>
+            sooo of course, Noodle Poodle feels very entitled to give his totally unsolicited (and possibly judgmental) opinions on your playlist.
+            whether you wanted them or not… hehe 💁‍♀️🐾🎧
 </div>
 """, unsafe_allow_html=True)
 

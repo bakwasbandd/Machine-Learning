@@ -8,7 +8,9 @@ from utils import fetch_artist_genres, get_recommendations_raw
 
 def get_playlist_tracks(playlist_url, sp):
     playlist_id = playlist_url.split("/")[-1].split("?")[0]
+    playlist= sp.playlist(playlist_id)
     tracks = sp.playlist_tracks(playlist_id)
+    playlist_name = playlist['name'] #to get playlist name
     data = []
 
     for item in tracks['items']:
@@ -19,12 +21,12 @@ def get_playlist_tracks(playlist_url, sp):
                 'artist': track['artists'][0]['name'],
                 'artist_id': track['artists'][0]['id']
             })
-    return pd.DataFrame(data)
+    return pd.DataFrame(data),playlist_name
 
 
 # for top artists, PIECHART
 def plot_pie_chart(data, title):
-    fig, ax = plt.subplots()  # top get a blank canvas
+    fig, ax = plt.subplots(figsize=(5, 3))  # top get a blank canvas
     fig.patch.set_facecolor("#7B97CC")  # Light cream background
     ax.pie(
         data.values,
@@ -37,18 +39,19 @@ def plot_pie_chart(data, title):
     )
 
     ax.set_ylabel('')
-    ax.set_title(title, fontsize=15, fontweight='bold',fontname='Arial Rounded MT Bold')
+    ax.set_title(title, fontsize=15, fontweight='bold',
+                 fontname='Arial Rounded MT Bold')
     ax.axis("equal")  # for a perfect circle
     plt.tight_layout()
     return fig
 
 
 def plot_bar_chart(data, title, ylabel):
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(5, 3))
     fig.patch.set_facecolor("#F1D7D7")
     ax.set_facecolor("#F1D7D7")  # plot background
     bar_colors = ["#8B485F", "#496D4D", "#7C7CB6",
-                  "#579FC0", "#AA6151", "#A8486D", "#5F7450"]
+                  "#579FC0", "#AA6151", "#A8486D", "#6C4A70"]
     barChart = ax.barh(data.index, data.values, color=bar_colors[:len(
         data)], edgecolor='black', linewidth=1)
     ax.set_title(title, fontsize=20, fontweight='bold',
@@ -65,7 +68,7 @@ def plot_bar_chart(data, title, ylabel):
 
 
 def analyze_playlist(playlist_url, sp):
-    df = get_playlist_tracks(playlist_url, sp)
+    df,playlist_name = get_playlist_tracks(playlist_url, sp)
     if df.empty:
         return None
 
@@ -81,6 +84,7 @@ def analyze_playlist(playlist_url, sp):
     top_genres = genre_counts.head(5).index.tolist()
 
     result = {
+        "playlist_name" : playlist_name,
         "top_artist": top_artist,
         "top_genre": top_genre,
         "top_genres": top_genres,
