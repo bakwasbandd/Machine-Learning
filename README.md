@@ -39,4 +39,5 @@ Clone the repo and install the dependencies:
 git clone https://github.com/yourusername/NoodlesHatesIt.git
 cd NoodlesHatesIt
 pip install -r requirements.txt
+python -m streamlit run app.py
 ```

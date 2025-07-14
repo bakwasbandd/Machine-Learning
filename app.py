@@ -102,157 +102,229 @@ with centre:
     st.image(img, width=150)
 
 
-st.markdown("""
-<div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
-    <label style='font-size:18px; color:'white'; font-weight:bold;'>
-        Insert your playlist here so Noodles can call it trash — <br>respectfully, of course!!! (ᵕ•_•)
-    </label>
-</div>
-""", unsafe_allow_html=True)
+# st.markdown("""
+# <div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
+#     <label style='font-size:18px; color:'white'; font-weight:bold;'>
+#         Insert your playlist here so Noodles can call it trash — <br>respectfully, of course!!! (ᵕ•_•)
+#     </label>
+# </div>
+# """, unsafe_allow_html=True)
 
-playlist_url = st.text_input("", key="playlist_input")
+# playlist_url = st.text_input("", key="playlist_input")
+# st.subheader("")
+
 st.subheader("")
+if 'show_input' not in st.session_state:
+    st.session_state['show_input'] = False
 
+if not st.session_state['show_input']:
+    col1, col2, col3 = st.columns([5, 4, 5])  # for centering
+    with col2:
+        if st.button("😼🔗 Get Roasted by Noodles"):
+            st.session_state['show_input'] = True
 
-if playlist_url:
-    with st.spinner("Analyzing your playlist..."):
-        result = analyze_playlist(playlist_url, sp)
+if st.session_state['show_input']:
+    st.markdown("""
+        <div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
+            <label style='font-size:18px; color:#ffeee6; font-weight:bold;'>
+                Insert your playlist so Noodles can call it trash — respectfully, of course!!! (ᵕ•_•)
+            </label>
+        </div>
+    """, unsafe_allow_html=True)
+    playlist_url = st.text_input("", key="playlist_input")
 
-        if result:
-            st.text("")
-            st.title(f"🎵 Playlist: {result['playlist_name']}")
-            st.subheader("🎤 Noodles thinks you're a bit obsessed ")
-            st.pyplot(result["artist_chart"])
-            # st.write(get_roast(result["top_artist"]))
-            st.markdown(f"""
-            <div style='
-                background-color: #353839;
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px auto;
-                width: 80%;
-                text-align: center;
-                font-size: 18px;
-                font-family: Comic Sans MS, cursive;
-                color: #FFFFFF;
-                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            '>
-                {get_artist_roast(result["top_artist"])}
-            </div>
-            """, unsafe_allow_html=True)
-            img = Image.open("pictures/noodlesSleeping(2).jpg")
-            left, centre, right = st.columns([4, 2, 4])
-            with centre:
-                st.image(img, width=200,
-                         caption='The state i found noodles in after he listened to your playlist.')
+    if playlist_url:
+        with st.spinner("Analyzing your playlist..."):
+            result = analyze_playlist(playlist_url, sp)
 
-            st.subheader(
-                "🎧 Noodles thinks you should pick a personality, ANY personality")
-            st.pyplot(result["genre_chart"])
+            if result:
+                st.text("")
+                st.title(f"🎵 Playlist: {result['playlist_name']}")
+                st.subheader("🎤 Noodles thinks you're a bit obsessed ")
+                st.pyplot(result["artist_chart"])
+                # st.write(get_roast(result["top_artist"]))
+                # st.markdown(f"""
+                # <div style='
+                #     background-color: #353839;
+                #     border-radius: 15px;
+                #     padding: 20px;
+                #     margin: 20px auto;
+                #     width: 80%;
+                #     text-align: center;
+                #     font-size: 18px;
+                #     font-family: Comic Sans MS, cursive;
+                #     color: #FFFFFF;
+                #     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+                # '>
+                #     {get_artist_roast(result["top_artist"])}
+                # </div>
+                # """, unsafe_allow_html=True)
 
-            st.markdown(f"""
-            <div style='
-                background-color: #353839;
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px auto;
-                width: 80%;
-                text-align: center;
-                font-size: 18px;
-                font-family: Comic Sans MS, cursive;
-                color: #FFFFFF;
-                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            '>
-                {get_genre_roast(result["top_genre"])}
-            </div>
-            """, unsafe_allow_html=True)
-
-            col1, col2, col3 = st.columns(3)
-            with col2:
-                st.markdown(get_video_html("pictures/litrnoodles.mp4"),
-                            unsafe_allow_html=True)
-
-            st.subheader("🧠 Noodles rates your playlist a SOLID 2/10")
-            # st.write(get_personality_roast(result["top_genres"]))
-            st.markdown(f"""
-            <div style='
-                background-color: #353839;
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px auto;
-                width: 80%;
-                text-align: center;
-                font-size: 18px;
-                font-family: Comic Sans MS, cursive;
-                color: #FFFFFF;
-                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            '>
-                {get_personality_roast(result["top_genres"])}
-                </div>
-            """, unsafe_allow_html=True)
-            col1, col2, col3 = st.columns(3)
-            with col2:
-                st.markdown(get_video_html("pictures/carjudging.mp4"),
-                            unsafe_allow_html=True)
-
-            st.subheader("🎶 More Trash (Curated by Noodles)")
-            # add a gif here!!!!!!!!!!!!!
-            st.subheader("")
-            col1, col2, col3 = st.columns([1, 2, 1])
-
-            with col2:
-                st.markdown(get_video_html("pictures/loadingcar.mp4",
-                            width=300), unsafe_allow_html=True)
-
-            st.markdown("""
-            <div style='text-align: center;'>
+                st.markdown(f"""
                 <div style='
-                    background-color: #fff9c4;
-                    border: 2px dashed #d4af37;
-                    padding: 12px 16px;
-                    margin-top: 12px;
+                    background-color: #222;
+                    border-left: 8px solid #ff9f43;
                     border-radius: 10px;
-                    color: #444444;
-                    font-family: Comic Sans MS, cursive, bold;
-                    text-align: center;
-                    box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
-                    display: inline-block;
+                    padding: 20px;
+                    margin: 25px auto;
+                    width: 80%;
+                    font-family: Comic Sans MS, cursive;
+                    font-size: 17px;
+                    color: #fff7e6;
+                    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
                 '>
-                    🐾 Still working on this... 🐾 
+                    😾 
+                    {get_artist_roast(result["top_artist"])}
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.subheader("")
-            st.markdown(
-                "<div style='text-align:center; font-size:20px;'>ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ</div>", unsafe_allow_html=True)
-            st.subheader("")
-            # for recommendations
-            # !!! not working !!!
-            # try recommendations based off top 5 artists
+                """, unsafe_allow_html=True)
 
-        else:
-            st.error("Something went wrong. Please check the playlist link.")
+                img = Image.open("pictures/noodlesSleeping(2).jpg")
+                left, centre, right = st.columns([4, 2, 4])
+                with centre:
+                    st.image(img, width=200,
+                             caption='The state i found noodles in after he listened to your playlist.')
 
+                st.subheader(
+                    "🎧 Noodles thinks you should pick a personality, ANY personality")
+                st.pyplot(result["genre_chart"])
 
+                st.markdown(f"""
+                <div style='
+                    background-color: #222;
+                    border-left: 8px solid #ff9f43;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 25px auto;
+                    width: 80%;
+                    font-family: Comic Sans MS, cursive;
+                    font-size: 17px;
+                    color: #fff7e6;
+                    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+                '>
+                    😾 
+                    {get_genre_roast(result["top_genre"])}
+                </div>
+                """, unsafe_allow_html=True)
+
+                # st.markdown(f"""
+                # <div style='
+                #     background-color: #353839;
+                #     border-radius: 15px;
+                #     padding: 20px;
+                #     margin: 20px auto;
+                #     width: 80%;
+                #     text-align: center;
+                #     font-size: 18px;
+                #     font-family: Comic Sans MS, cursive;
+                #     color: #FFFFFF;
+                #     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+                # '>
+                #     {get_genre_roast(result["top_genre"])}
+                # </div>
+                # """, unsafe_allow_html=True)
+
+                col1, col2, col3 = st.columns(3)
+                with col2:
+                    st.markdown(get_video_html("pictures/litrnoodles.mp4"),
+                                unsafe_allow_html=True)
+
+                st.subheader("🧠 Noodles rates your playlist a SOLID 2/10")
+
+                st.markdown(f"""
+                <div style='
+                    background-color: #222;
+                    border-left: 8px solid #ff9f43;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 25px auto;
+                    width: 80%;
+                    font-family: Comic Sans MS, cursive;
+                    font-size: 17px;
+                    color: #fff7e6;
+                    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+                '>
+                    😾 
+                    {get_personality_roast(result["top_genres"])}
+                </div>
+                """, unsafe_allow_html=True)
+
+                col1, col2, col3 = st.columns(3)
+                with col2:
+                    st.markdown(get_video_html("pictures/carjudging.mp4"),
+                                unsafe_allow_html=True)
+
+                st.subheader("🎶 More Trash (Curated by Noodles)")
+                # add a gif here!!!!!!!!!!!!!
+                st.subheader("")
+                col1, col2, col3 = st.columns([1, 2, 1])
+
+                with col2:
+                    st.markdown(get_video_html("pictures/loadingcar.mp4",
+                                width=300), unsafe_allow_html=True)
+
+                st.markdown("""
+                <div style='text-align: center;'>
+                    <div style='
+                        background-color: #fff9c4;
+                        border: 2px dashed #d4af37;
+                        padding: 12px 16px;
+                        margin-top: 12px;
+                        border-radius: 10px;
+                        color: #444444;
+                        font-family: Comic Sans MS, cursive, bold;
+                        text-align: center;
+                        box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+                        display: inline-block;
+                    '>
+                        🐾 Still working on this... 🐾 
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                st.subheader("")
+                st.markdown(
+                    "<div style='text-align:center; font-size:20px;'>ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ</div>", unsafe_allow_html=True)
+                st.subheader("")
+                # for recommendations
+                # !!! not working !!!
+                # try recommendations based off top 5 artists
+
+            else:
+                st.error("Something went wrong. Please check the playlist link.")
+
+st.text("")
+st.markdown(
+    "<div style='text-align:center; font-size:20px;'>ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ ᓚᘏᗢ</div>", unsafe_allow_html=True)
+
+st.subheader("")
 col1, col2, col3 = st.columns(3)
 with col2:
     st.markdown(get_video_html("pictures/jumpingcar.mp4"),
                 unsafe_allow_html=True)
 
+st.text("")
+
 st.subheader("👩🏻‍💻 About this project ")
+st.text("")
+
 st.markdown("""
-<div style="border: 2px dashed #ffeee6;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px auto;
-            width: 80%;
-            color: #ffeee6;
-            font-family: Comic Sans MS;
-            text-align: center;">
-            hiiiii!!<br> turning literally everything about my rude orange cat, Noodles, is kind of my brand.
-            he’s nosy, dramatic, and wildly talented at sticking his face where it absolutely doesn’t belong — like right into my food 🍜😾 <br>
-            sooo of course, Noodle Poodle feels very entitled to give his totally unsolicited (and possibly judgmental) opinions on your playlist.
-            whether you wanted them or not… hehe 💁‍♀️🐾🎧
+<div style="
+    background: linear-gradient(135deg, #b35929 0%, #cc7744 100%);
+    color: #fffbe6;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 16px;
+    padding: 25px;
+    margin: 30px auto;
+    border-radius: 20px;
+    width: 80%;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    border: 2px dashed #ffd699;
+">
+    <p style="font-size: 20px; font-weight: bold; margin-bottom: 15px;">hiiiii!!</p>
+    turning literally everything about my rude orange cat, <b>Noodles</b>, is kind of my brand. <br><br>
+    he’s nosy, dramatic, and wildly talented at sticking his face where it absolutely doesn’t belong — like right into my food 🍜😾<br><br>
+    sooo of course, <b>Noodle Poodle</b> feels very entitled to give his totally unsolicited (and possibly judgmental) opinions on your playlist. <br>
+    whether you wanted them or not… hehe 💁‍♀️🐾🎧
 </div>
 """, unsafe_allow_html=True)
 
