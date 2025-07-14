@@ -32,7 +32,7 @@ def get_genre_roast(name):
 def get_personality_roast(genres):
     response = co.chat(
         model='command-r',
-        message=f"Write one sharp, 4-5 lines max roast from Noodles (no cheesy references, and ALWAYS include Noodle's name in the roast) directed at the playlist curator for the PERSONALITY of their PLAYLIST, which is dominated by the {genres} genre. Keep it clever and no cringe, making sure to poke fun at the vibe or personality of the playlist based on that genre. No generic commentary, and do not include any follow-up text after the roast."
+        message=f"Write one sharp, 4-5 lines max roast from Noodles (no cheesy references, and ALWAYS include Noodle's name in the roast) directed at the playlist curator(dont refer to them in the roast) for the PERSONALITY of their PLAYLIST, which is dominated by the {genres} genre. Keep it clever and no cringe, making sure to poke fun at the vibe or personality of the playlist based on that genre. No generic commentary, and do not include any follow-up text after the roast."
     )
     return response.text.strip()
 
