@@ -10,7 +10,7 @@ def get_artist_roast(name):
         model='command-r',
         message=f"""
         Write one sharp, 2-3 lines max roast from Noodles (no cheesy references, and ALWAYS include Noodle's name in the roast) 
-        directed at the USER for listening to too much of {name}, their top artist. 
+        directed at the playlist curator for listening to too much of {name}, their top artist. 
         Keep it clever and no cringe. Tailor the roast to that artist. Do NOT include any follow-up text after the roast.
         """
     )
