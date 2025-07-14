@@ -310,7 +310,7 @@ st.markdown("""
 <div style="
     background: linear-gradient(135deg, #b35929 0%, #cc7744 100%);
     color: #fffbe6;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: 'Comic Sans MS';
     font-size: 16px;
     padding: 25px;
     margin: 30px auto;
