@@ -168,7 +168,7 @@ if st.session_state['show_input']:
                     padding: 20px;
                     margin: 25px auto;
                     width: 80%;
-                    font-family: Comic Sans MS, cursive;
+                    font-family: Comic Sans MS;
                     font-size: 17px;
                     color: #fff7e6;
                     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -196,7 +196,7 @@ if st.session_state['show_input']:
                     padding: 20px;
                     margin: 25px auto;
                     width: 80%;
-                    font-family: Comic Sans MS, cursive;
+                    font-family: Comic Sans MS;
                     font-size: 17px;
                     color: #fff7e6;
                     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -238,7 +238,7 @@ if st.session_state['show_input']:
                     padding: 20px;
                     margin: 25px auto;
                     width: 80%;
-                    font-family: Comic Sans MS, cursive;
+                    font-family: Comic Sans MS;
                     font-size: 17px;
                     color: #fff7e6;
                     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -271,7 +271,7 @@ if st.session_state['show_input']:
                         margin-top: 12px;
                         border-radius: 10px;
                         color: #444444;
-                        font-family: Comic Sans MS, cursive, bold;
+                        font-family: Comic Sans MS, bold;
                         text-align: center;
                         box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
                         display: inline-block;
